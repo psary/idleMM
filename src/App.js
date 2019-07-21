@@ -1,25 +1,26 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import { Loop } from 'react-game-kit';
+import { MuiThemeProvider, createMuiTheme } from '@material-ui/core/styles';
+import CssBaseline from '@material-ui/core/CssBaseline';
+import Game from './Component/Game';
 
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark'
+  }
+  },
+)
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <MuiThemeProvider theme={theme}>
+      <CssBaseline />
+      <div className="App">
+        <Loop>
+            <Game></Game>
+        </Loop>
+      </div>
+    </MuiThemeProvider>
   );
 }
 
