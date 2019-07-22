@@ -2,7 +2,8 @@ import React, { Component } from 'react';
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import './Game.css'
-import { Button, CircularProgress } from '@material-ui/core';
+import { Button, CircularProgress, ClickAwayListener } from '@material-ui/core';
+import { tsExpressionWithTypeArguments } from '@babel/types';
 
 class Game extends Component {
 
@@ -18,6 +19,9 @@ class Game extends Component {
           y: 0
         }
         this.update = this.update.bind(this)
+        this.end = moment().add(10, 's');
+        this.max = moment.duration(moment().diff(this.end)).asMilliseconds() *-1;
+        this.test = 0;
     }
 
     componentDidMount() {
@@ -29,16 +33,21 @@ class Game extends Component {
       }
     
       update() {
-        let x = this.state.x +0.5;
-        if(x < 101){
-          this.setState({x: x, y:this.state.y+1})
-        }
+        if(this.test < 100)
+        this.test = 100 - (moment.duration(moment().diff(this.end)).asMilliseconds() *-1 * 100 / this.max) 
+          this.setState({x: this.test, y:this.state.y+1})
       };
+
+      click(){
+        this.end = moment().add(10, 's');
+        this.max = moment.duration(moment().diff(this.end)).asMilliseconds() *-1;
+        this.test = 0;
+      }
 
     render() {
         return ( 
           <div className="game-container">
-            <Button>Test</Button>
+            <Button onClick={this.click.bind(this)}>Test</Button>
             <CircularProgress classes="loader" variant="static" value={parseInt(this.state.x)} thickness={8} />
           </div>
         );
