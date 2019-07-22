@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import moment from 'moment'
 import PropTypes from 'prop-types'
+import './Game.css'
+import { Button, CircularProgress } from '@material-ui/core';
 
 class Game extends Component {
 
@@ -11,6 +13,11 @@ class Game extends Component {
     constructor(props){
         super(props);
         moment.locale('fr')
+        this.state = {
+          x: 10,
+          y: 0
+        }
+        this.update = this.update.bind(this)
     }
 
     componentDidMount() {
@@ -22,11 +29,18 @@ class Game extends Component {
       }
     
       update() {
-        // tick logic
+        let x = this.state.x +0.5;
+        if(x < 101){
+          this.setState({x: x, y:this.state.y+1})
+        }
       };
 
     render() {
-        return ( ''
+        return ( 
+          <div className="game-container">
+            <Button>Test</Button>
+            <CircularProgress classes="loader" variant="static" value={parseInt(this.state.x)} thickness={8} />
+          </div>
         );
     }
 }

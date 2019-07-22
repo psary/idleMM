@@ -17,7 +17,9 @@ function App() {
       <CssBaseline />
       <div className="App">
         <Loop>
-            <Game></Game>
+            <Game>
+              
+            </Game>
         </Loop>
       </div>
     </MuiThemeProvider>
