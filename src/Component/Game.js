@@ -3,7 +3,8 @@ import moment from 'moment'
 import PropTypes from 'prop-types'
 import './Game.css'
 import { Button, CircularProgress, ClickAwayListener } from '@material-ui/core';
-import { tsExpressionWithTypeArguments } from '@babel/types';
+import { tsExpressionWithTypeArguments, tsParenthesizedType } from '@babel/types';
+import Loader from './Loader/Loader.js';
 
 class Game extends Component {
 
@@ -12,45 +13,38 @@ class Game extends Component {
       };
 
     constructor(props){
-        super(props);
-        moment.locale('fr')
-        this.state = {
-          x: 10,
-          y: 0
-        }
-        this.update = this.update.bind(this)
-        this.end = moment().add(10, 's');
-        this.max = moment.duration(moment().diff(this.end)).asMilliseconds() *-1;
-        this.test = 0;
+      super(props);
+      moment.locale('fr')
+      this.state = {
+        count: 0
+      }
+      this.update = this.update.bind(this)
+      this._count= 0;
     }
 
     componentDidMount() {
-        this.context.loop.subscribe(this.update);
-      }
-    
-      componentWillUnmount() {
-        this.context.loop.unsubscribe(this.update);
-      }
-    
-      update() {
-        if(this.test < 100)
-        this.test = 100 - (moment.duration(moment().diff(this.end)).asMilliseconds() *-1 * 100 / this.max) 
-          this.setState({x: this.test, y:this.state.y+1})
-      };
+      this.context.loop.subscribe(this.update);
+    }
 
-      click(){
-        this.end = moment().add(10, 's');
-        this.max = moment.duration(moment().diff(this.end)).asMilliseconds() *-1;
-        this.test = 0;
-      }
+    componentWillUnmount() {
+      this.context.loop.unsubscribe(this.update);
+    }
+
+    update() {
+      this.setState({count: this._count});
+    }
+
+    finish() {
+      this._count+=1;
+    }
 
     render() {
-        return ( 
-          <div className="game-container">
-            <Button onClick={this.click.bind(this)}>Test</Button>
-            <CircularProgress classes="loader" variant="static" value={parseInt(this.state.x)} thickness={8} />
-          </div>
-        );
+      return ( 
+        <div className="game-container">
+          {this.state.count}
+          <Loader seconds={10} finish={this.finish.bind(this)}></Loader>
+        </div>
+      );
     }
 }
 export default Game;
