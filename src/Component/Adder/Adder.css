@@ -1,0 +1,11 @@
+.whiteBox{
+    position: absolute;
+    width: 25px;
+    height: 25px;
+    background-color: aliceblue;
+}
+
+.loader{
+    border-radius: 6;
+    cursor: pointer;
+}

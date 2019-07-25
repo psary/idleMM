@@ -56,7 +56,7 @@ class Loader extends Component {
 
     render() {
         return ( 
-          <div className="game-container">
+          <div className="loader-container">
             <CircularProgress className="loader" onClick={this.click.bind(this)} variant="static" value={parseInt(this.state.percent)} thickness={8} />
           </div>
         );
